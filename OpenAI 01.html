@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portafolio Automatizado</title>
+    <!-- Fuente Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      /* ------------------------
+         VARIABLES PARA THEMING
+      -------------------------*/
+      :root {
+        --bg-color: #f9fafb;
+        --text-color: #1f2937;
+        --nav-bg-color: #1f2937;
+        --nav-text-color: #ffffff;
+        --accent-color: #3b82f6;
+        --accent-color-hover: #60a5fa;
+        --card-bg: #f9fafb;
+        --footer-bg: #1f2937;
+        --footer-text: #ffffff;
+      }
+
+      .dark-mode {
+        --bg-color: #1e1e1e;
+        --text-color: #f3f4f6;
+        --nav-bg-color: #111111;
+        --nav-text-color: #ffffff;
+        --accent-color: #3b82f6;
+        --accent-color-hover: #60a5fa;
+        --card-bg: #2c2c2c;
+        --footer-bg: #111111;
+        --footer-text: #ffffff;
+      }
+
+      /* ------------------------
+         CSS BASE
+      -------------------------*/
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      h1, h2, h3 {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      /* ------------------------
+         EFECTOS DE SCROLL
+         Usamos IntersectionObserver para mostrar
+         los elementos con animaciones al deslizar.
+      -------------------------*/
+      .fade-in,
+      .slide-in-left,
+      .slide-in-right,
+      .zoom-in {
+        opacity: 0;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .fade-in {
+        transform: translateY(20px);
+      }
+
+      .slide-in-left {
+        transform: translateX(-50px);
+      }
+
+      .slide-in-right {
+        transform: translateX(50px);
+      }
+
+      .zoom-in {
+        transform: scale(0.8);
+      }
+
+      /* Al mostrarse, reseteamos transform/opacity */
+      .fade-in.show,
+      .slide-in-left.show,
+      .slide-in-right.show,
+      .zoom-in.show {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ------------------------
+         NAVBAR
+      -------------------------*/
+      nav {
+        width: 100%;
+        background-color: var(--nav-bg-color);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      nav .logo {
+        font-size: 1.5rem;
+        color: var(--nav-text-color);
+        font-weight: 700;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 1rem;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      nav li a {
+        color: var(--nav-text-color);
+        padding: 0.5rem 1rem;
+        transition: background-color 0.3s;
+      }
+
+      nav li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+      }
+
+      .menu-icon {
+        display: none;
+        cursor: pointer;
+      }
+
+      .menu-icon div {
+        width: 25px;
+        height: 3px;
+        background-color: var(--nav-text-color);
+        margin: 5px 0;
+        transition: 0.4s;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      .nav-links-mobile {
+        position: absolute;
+        top: 4rem;
+        right: 0;
+        background-color: var(--nav-bg-color);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+        transform: translateX(100%);
+      }
+
+      .nav-links-mobile.show {
+        transform: translateX(0);
+      }
+
+      .nav-links-mobile li {
+        margin: 0.5rem 0;
+      }
+
+      .theme-toggle {
+        cursor: pointer;
+        color: var(--nav-text-color);
+        background: none;
+        border: 1px solid var(--nav-text-color);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s;
+        margin-left: 1rem;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* ------------------------
+         ENCABEZADO / HERO
+      -------------------------*/
+      header {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(to right, #3b82f6, #06b6d4);
+        color: #fff;
+        padding-top: 4rem; /* compensa el nav fijo */
+        position: relative;
+        overflow: hidden;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      header p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto 1.5rem auto;
+      }
+
+      header button {
+        background-color: #fff;
+        color: #3b82f6;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: 600;
+      }
+
+      header button:hover {
+        background-color: #e2e8f0;
+      }
+
+      /* Elementos decorativos en el hero */
+      .hero-decoration {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        filter: blur(100px);
+        border-radius: 50%;
+        animation: pulse 6s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      .hero-decoration:first-child {
+        top: 10%;
+        left: 10%;
+      }
+
+      .hero-decoration:nth-child(2) {
+        bottom: 10%;
+        right: 10%;
+      }
+
+      /* ------------------------
+         SECCIÓN SOBRE MÍ
+      -------------------------*/
+      section#about {
+        padding: 4rem 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      section#about img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        border: 4px solid #e2e8f0;
+      }
+
+      section#about p {
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .divider {
+        width: 80px;
+        height: 4px;
+        background-color: var(--accent-color);
+        margin: 1rem auto;
+        border-radius: 2px;
+      }
+
+      /* ------------------------
+         SECCIÓN PROYECTOS
+      -------------------------*/
+      section#projects {
+        background-color: var(--card-bg);
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        transition: background-color 0.3s;
+      }
+
+      section#projects h2 {
+        text-align: center;
+        color: var(--text-color);
+      }
+
+      /* Filtro de categorías */
+      .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .category-button {
+        background-color: var(--accent-color);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: 500;
+      }
+
+      .category-button:hover {
+        background-color: var(--accent-color-hover);
+      }
+
+      .projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .project-card {
+        background-color: #f9fafb;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .project-details {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .project-details h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-details p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+      }
+
+      .project-details a {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s;
+        text-align: center;
+        margin-top: auto;
+        font-weight: 500;
+      }
+
+      .project-details a:hover {
+        background-color: var(--accent-color-hover);
+      }
+
+      /* ------------------------
+         SECCIÓN CONTACTO
+      -------------------------*/
+      section#contact {
+        padding: 4rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      section#contact form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      section#contact input,
+      section#contact textarea {
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        outline: none;
+        font-size: 1rem;
+      }
+
+      section#contact button {
+        background-color: var(--accent-color);
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: 600;
+      }
+
+      section#contact button:hover {
+        background-color: var(--accent-color-hover);
+      }
+
+      footer {
+        background-color: var(--footer-bg);
+        color: var(--footer-text);
+        text-align: center;
+        padding: 1rem;
+        width: 100%;
+        transition: background-color 0.3s;
+      }
+
+      /* ------------------------
+         MEDIA QUERIES
+      -------------------------*/
+      @media screen and (max-width: 992px) {
+        header h1 {
+          font-size: 2.4rem;
+        }
+
+        header p {
+          font-size: 1rem;
+        }
+
+        .project-image {
+          height: 160px;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        nav ul {
+          display: none;
+        }
+
+        .menu-icon {
+          display: block;
+        }
+
+        .nav-links-mobile {
+          display: flex;
+          transform: translateX(100%);
+        }
+
+        header h1 {
+          font-size: 2rem;
+        }
+
+        header p {
+          font-size: 0.95rem;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        header h1 {
+          font-size: 1.75rem;
+        }
+
+        section#about img {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="fade-in">
+      <div class="logo">Mi Portafolio</div>
+      <ul class="nav-links">
+        <li><a href="#about">Sobre mí</a></li>
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+      <div class="menu-icon" id="menu-icon" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="nav-links-mobile" id="nav-links-mobile">
+        <li><a href="#about" onclick="toggleMenu()">Sobre mí</a></li>
+        <li><a href="#projects" onclick="toggleMenu()">Proyectos</a></li>
+        <li><a href="#contact" onclick="toggleMenu()">Contacto</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">Noche</button>
+    </nav>
+
+    <!-- Sección de Encabezado / Hero -->
+    <header>
+      <div class="hero-decoration"></div>
+      <div class="hero-decoration"></div>
+      <h1 class="fade-in">¡Hola, soy [Tu Nombre]!</h1>
+      <p class="fade-in">
+        Desarrollador web apasionado por crear experiencias digitales modernas.
+        A continuación, encontrarás algunos de mis proyectos y formas de
+        contactarme.
+      </p>
+      <button class="fade-in" onclick="scrollToSection('projects')">Ver Proyectos</button>
+    </header>
+
+    <!-- Sección Sobre Mí -->
+    <!-- Agregamos slide-in-left para la sección sobre mí -->
+    <section id="about" class="slide-in-left">
+      <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="zoom-in" />
+      <div class="divider"></div>
+      <h2>Sobre Mí</h2>
+      <p>
+        Soy un desarrollador web con experiencia en HTML5, CSS3 y JavaScript.
+        Disfruto trabajar en proyectos innovadores y mantenerme al día con las
+        últimas tendencias tecnológicas. Aquí puedes describir tu experiencia,
+        educación y cualquier detalle relevante para destacar tus habilidades.
+      </p>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <!-- Agregamos slide-in-right para la sección proyectos -->
+    <section id="projects" class="slide-in-right">
+      <h2>Proyectos</h2>
+      <!-- Botones de categorías -->
+      <div class="categories" id="category-buttons">
+        <!-- Se generan dinámicamente en JS -->
+      </div>
+      <div class="projects-container" id="projects-container"></div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <!-- Agregamos fade-in (ya existente) para la sección contacto -->
+    <section id="contact" class="fade-in">
+      <h2>Contacto</h2>
+      <p>
+        Si deseas discutir una oportunidad de trabajo o simplemente saludar,
+        ¡envíame un mensaje!
+      </p>
+      <form>
+        <input type="text" placeholder="Nombre" required />
+        <input type="email" placeholder="Correo electrónico" required />
+        <textarea placeholder="Tu mensaje" rows="5" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer class="fade-in">
+      <p>(c) 2025 Tu Nombre. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+      // DATOS DE PROYECTOS CON CATEGORÍAS
+      const projectsData = [
+        {
+          title: "Proyecto de Marketing",
+          description: "Landing page moderna para promoción de servicios.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "Marketing"
+        },
+        {
+          title: "Aplicación de Tareas",
+          description: "Aplicación web para la gestión de tareas diarias.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "Web"
+        },
+        {
+          title: "Sitio de Fotografía",
+          description: "Galería en línea con integración de redes sociales.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "Fotografía"
+        },
+        {
+          title: "Blog Personal",
+          description: "Diseño minimalista y adaptable para bloguear.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "Blog"
+        },
+        {
+          title: "Aplicación Móvil",
+          description: "Aplicación móvil híbrida para iOS y Android.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "Móvil"
+        },
+        {
+          title: "E-commerce",
+          description: "Tienda en línea con pasarela de pagos.",
+          image: "https://via.placeholder.com/300x150",
+          link: "#",
+          category: "E-commerce"
+        }
+      ];
+
+      // Generación dinámica de proyectos
+      const projectsContainer = document.getElementById("projects-container");
+      const categoryButtonsContainer = document.getElementById("category-buttons");
+
+      // Obtener categorías únicas de los datos
+      const allCategories = ["Todos", ...new Set(projectsData.map(p => p.category))];
+
+      function generateCategoryButtons() {
+        allCategories.forEach(cat => {
+          const btn = document.createElement("button");
+          btn.classList.add("category-button");
+          btn.textContent = cat;
+          btn.addEventListener("click", () => filterProjects(cat));
+          categoryButtonsContainer.appendChild(btn);
+        });
+      }
+
+      function generateProjects(projects) {
+        projectsContainer.innerHTML = "";
+        projects.forEach((project) => {
+          const card = document.createElement("div");
+          card.classList.add("project-card");
+
+          card.innerHTML = `
+            <img class="project-image" src="${project.image}" alt="Proyecto" />
+            <div class="project-details">
+              <h3>${project.title}</h3>
+              <p>${project.description}</p>
+              <a href="${project.link}">Ver Detalles</a>
+            </div>
+          `;
+
+          projectsContainer.appendChild(card);
+        });
+      }
+
+      // Filtrar proyectos por categoría
+      function filterProjects(category) {
+        if (category === "Todos") {
+          generateProjects(projectsData);
+        } else {
+          const filtered = projectsData.filter(proj => proj.category === category);
+          generateProjects(filtered);
+        }
+      }
+
+      // Función para desplazarse a una sección de forma suave
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          window.scrollTo({
+            top: section.offsetTop - 60,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      // Función para alternar el menú en modo mobile
+      function toggleMenu() {
+        const navLinksMobile = document.getElementById('nav-links-mobile');
+        navLinksMobile.classList.toggle('show');
+      }
+
+      // Función para cambiar de tema día/noche
+      function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle('dark-mode');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (body.classList.contains('dark-mode')) {
+          themeToggleBtn.textContent = 'Día';
+        } else {
+          themeToggleBtn.textContent = 'Noche';
+        }
+      }
+
+      // Intersection Observer para mostrar elementos con clase de animación
+      const observerOptions = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observamos todos los elementos que tengan las clases de animación
+      document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .zoom-in').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Inicializa la generación de proyectos y categorías
+      window.addEventListener("DOMContentLoaded", () => {
+        generateCategoryButtons();
+        generateProjects(projectsData);
+      });
+    </script>
+  </body>
+</html>
