@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <meta name="description" content="A brief description of your portfolio.">
+    <link rel="icon" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+      * {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 2rem;
+}
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem auto;
+  width: 80%;
+}
+section {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+footer {
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+@media screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="about" aria-label="About Me">
+            <h2>About Me</h2>
+            <p>I am a passionate web developer with experience in various technologies. I love creating beautiful and functional websites that provide a great user experience.</p>
+        </section>
+        <section id="projects" aria-label="My Projects">
+            <h2>Projects</h2>
+            <ul>
+                <li><a href="#project1">Project 1: E-commerce Website</a></li>
+                <li><a href="#project2">Project 2: Portfolio Website</a></li>
+                <!-- Add more projects here -->
+            </ul>
+            <article id="project1">
+                <h3>E-commerce Website</h3>
+                <p>Built using React and Node.js, this e-commerce website provides a seamless shopping experience for users.</p>
+                <!-- Add more details about the project here -->
+            </article>
+            <article id="project2">
+                <h3>Portfolio Website</h3>
+                <p>This portfolio website showcases my skills and projects. It was built using HTML, CSS, and JavaScript.</p>
+                <!-- Add more details about the project here -->
+            </article>
+        </section>
+        <section id="skills" aria-label="My Skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>JavaScript (ES6+)</li>
+                <li>React</li>
+                <li>Node.js</li>
+                <li>HTML5 & CSS3</li>
+                <!-- Add more skills here -->
+            </ul>
+        </section>
+        <section id="contact" aria-label="Contact Me">
+            <h2>Contact Me</h2>
+            <p>You can reach me at: <a href="mailto:your_email@example.com">your_email@example.com</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2021 My Portfolio</p>
+    </footer>
+</body>
+</html>
