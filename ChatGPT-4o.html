@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Personal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --background-color: #1e1e2f;
+            --text-color: #fff;
+            --section-bg: rgba(255, 255, 255, 0.1);
+            --highlight-color: #ffcc00;
+        }
+        
+        body.light-mode {
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --section-bg: rgba(0, 0, 0, 0.1);
+            --highlight-color: #ff9900;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--background-color);
+            color: var(--text-color);
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            border-bottom: 2px solid var(--highlight-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--highlight-color);
+            margin-bottom: 15px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin: 5px 0 0;
+        }
+        section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: var(--section-bg);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: left;
+            transition: background 0.3s;
+        }
+        h2 {
+            color: var(--highlight-color);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--highlight-color);
+            padding-bottom: 10px;
+        }
+        #projects div {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out, background 0.3s;
+        }
+        #projects div:hover {
+            transform: scale(1.05);
+        }
+        #contact p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+        .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight-color);
+            color: var(--background-color);
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleMode()">Modo Noche/Día</button>
+    <header>
+        <img src="profile.jpg" alt="Foto de perfil" class="profile-img">
+        <h1 id="nombre">Nombre Apellido</h1>
+        <p id="profesion">Desarrollador Web</p>
+    </header>
+    <section id="about">
+        <h2>Sobre mí</h2>
+        <p id="descripcion">Soy un apasionado desarrollador web con experiencia en tecnologías modernas.</p>
+    </section>
+    <section id="projects">
+        <h2>Proyectos</h2>
+        <div id="project-list">
+            <div>Proyecto 1 - Descripción breve</div>
+            <div>Proyecto 2 - Descripción breve</div>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Contacto</h2>
+        <p>Email: <span id="email">correo@ejemplo.com</span></p>
+        <p>Teléfono: <span id="telefono">+123456789</span></p>
+    </section>
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        });
+    </script>
+</body>
+</html>
