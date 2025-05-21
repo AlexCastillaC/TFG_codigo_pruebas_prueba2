@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio - Juan Desarrollador</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --background: #0f172a;
+            --text: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, #1e1b4b 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, #312e81 0%, transparent 50%);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            bottom: 5px;
+            right: -12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 1.5rem 4rem;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            gap: 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-dark) 0%, transparent 100%);
+            opacity: 0.1;
+            filter: blur(100px);
+            border-radius: 50%;
+            animation: pulse 8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.15; }
+        }
+
+        .hero-content {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 3px;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            perspective: 1000px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary-dark), var(--accent));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, var(--card-bg) 0%, transparent 100%);
+        }
+
+        .project-content {
+            padding: 2rem;
+            transform: translateZ(20px);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .project-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 4rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 2rem;
+                gap: 1.5rem;
+            }
+        }
+
+         .skills-section {
+            padding: 4rem 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .skill-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .skill-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .experience-section {
+            padding: 4rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 30px;
+            position: relative;
+            margin: 2rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            flex-direction: row-reverse;
+            padding-right: 0;
+            padding-left: 30px;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            position: relative;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-button {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        footer {
+            background: var(--card-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .social-link {
+            color: var(--gray);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 3rem;
+                padding-right: 0;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+                flex-direction: row;
+                padding-left: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+   
+    <header>
+        <nav>
+            <div class="logo">JD</div>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#proyectos">Proyectos</a>
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="hamburger">☰</div>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Transformando ideas en experiencias digitales</h1>
+            <p class="subtitle">Desarrollador Full Stack apasionado por crear soluciones web innovadoras y experiencias de usuario excepcionales</p>
+            <a href="#contacto" class="cta-button">Ver mi trabajo</a>
+        </div>
+        <div class="hero-image">
+            <img src="/api/placeholder/600/600" alt="Juan Desarrollador">
+        </div>
+    </section>
+
+    <section id="habilidades" class="skills-section">
+        <h2>Mis Habilidades</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">🎨</div>
+                <h3 class="skill-title">Diseño UI/UX</h3>
+                <p class="skill-description">Creación de interfaces intuitivas y experiencias de usuario excepcionales</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">💻</div>
+                <h3 class="skill-title">Desarrollo Frontend</h3>
+                <p class="skill-description">Desarrollo de aplicaciones web modernas con React, Vue y Angular</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">⚙️</div>
+                <h3 class="skill-title">Desarrollo Backend</h3>
+                <p class="skill-description">Construcción de APIs robustas y sistemas escalables</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">📱</div>
+                <h3 class="skill-title">Desarrollo Móvil</h3>
+                <p class="skill-description">Creación de aplicaciones móviles nativas y multiplataforma</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experiencia" class="experience-section">
+        <h2>Experiencia Profesional</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2023 - Presente</div>
+                    <h3>Senior Frontend Developer</h3>
+                    <p>TechCorp Solutions</p>
+                    <p>Liderando el desarrollo de aplicaciones web de alta escala</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2021 - 2023</div>
+                    <h3>Full Stack Developer</h3>
+                    <p>Digital Innovations Ltd</p>
+                    <p>Desarrollo de soluciones end-to-end para clientes internacionales</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2019 - 2021</div>
+                    <h3>Frontend Developer</h3>
+                    <p>WebTech Startups</p>
+                    <p>Desarrollo de interfaces de usuario y componentes reutilizables</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="estadisticas" class="statistics-section">
+        <div class="statistics">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Proyectos Completados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">Clientes Satisfechos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Años de Experiencia</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Tecnologías Dominadas</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact-section">
+        <h2>Contáctame</h2>
+        <div class="contact-cards">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <p>contacto@juandev.com</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>Teléfono</h3>
+                <p>+34 600 000 000</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Ubicación</h3>
+                <p>Madrid, España</p>
+            </div>
+        </div>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" class="form-input" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-input" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-input" rows="5" placeholder="Mensaje" required></textarea>
+            </div>
+            <button type="submit" class="form-button">Enviar Mensaje</button>
+        </form>
+    </section>
+   
+
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-link">GitHub</a>
+            <a href="#" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">Twitter</a>
+        </div>
+        <p>(c) 2024 Juan Desarrollador. Todos los derechos reservados.</p>
+    </footer>
+     <style>
+    /* Estilos para elementos flotantes y efectos */
+    .floating-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .floating-element {
+        position: absolute;
+        background: linear-gradient(45deg, var(--accent), var(--primary));
+        border-radius: 50%;
+        filter: blur(3px);
+        opacity: 0.1;
+        animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        50% {
+            transform: translate(100px, 100px) rotate(180deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg);
+        }
+    }
+
+    .cursor-glow {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+        position: fixed;
+        pointer-events: none;
+        opacity: 0.1;
+        z-index: 1;
+        transition: all 0.1s ease;
+        display: none;
+    }
+
+    .ambient-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+    }
+
+    .glow-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+        animation: pulse-glow 4s infinite ease-in-out;
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.3;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.5;
+        }
+    }
+
+    .skill-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 100%
+        );
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% {
+            transform: translateX(-200%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+
+    .hero::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.1;
+    }
+
+    .parallax-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        pointer-events: none;
+    }
+
+    .parallax-element {
+        position: absolute;
+        background: linear-gradient(45deg, var(--primary), var(--accent));
+        border-radius: 50%;
+        opacity: 0.1;
+        filter: blur(2px);
+    }
+</style>
+<style>
+    /* Actualización de los estilos de elementos flotantes */
+    .floating-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -2; /* Cambiado a -2 para estar detrás del contenido */
+        overflow: hidden;
+    }
+
+    .ambient-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -3; /* Cambiado a -3 para estar detrás de los elementos flotantes */
+        opacity: 0.3;
+    }
+
+    .floating-element {
+        position: absolute;
+        background: linear-gradient(45deg, var(--accent), var(--primary));
+        border-radius: 50%;
+        filter: blur(3px);
+        opacity: 0.05; /* Reducida la opacidad */
+        animation: float 20s infinite linear;
+    }
+
+    .parallax-layer {
+        z-index: -2;
+    }
+
+    /* Asegurar que las secciones tengan fondo semi-transparente */
+    section {
+        position: relative;
+        background: rgba(15, 23, 42, 0.8); /* Fondo semi-transparente */
+        backdrop-filter: blur(10px); /* Efecto de desenfoque para el fondo */
+        border-radius: 1rem;
+        margin: 2rem auto;
+    }
+
+    /* Actualizar el estilo de las tarjetas para mejor contraste */
+    .project-card, .skill-card, .contact-card, .timeline-content {
+        background: rgba(30, 41, 59, 0.9); /* Fondo más oscuro y semi-transparente */
+        backdrop-filter: blur(5px);
+    }
+
+    /* Mejorar la visibilidad del texto */
+    h1, h2, h3 {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Asegurar que el header esté por encima de los efectos */
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Ajuste del cursor glow */
+    .cursor-glow {
+        z-index: -1;
+        opacity: 0.05;
+    }
+
+    /* Ajuste del canvas de partículas */
+    canvas {
+        z-index: -1;
+        opacity: 0.3;
+    }
+</style>
+        <div class="cursor-glow"></div>
+<div class="floating-elements"></div>
+<div class="ambient-background">
+    <div class="parallax-layer"></div>
+   
+<script>
+    // Modificar la creación de elementos flotantes para que sean más sutiles
+    const floatingContainer = document.querySelector('.floating-elements');
+    for (let i = 0; i < 15; i++) {
+        const element = document.createElement('div');
+        element.className = 'floating-element';
+        element.style.width = Math.random() * 100 + 50 + 'px';
+        element.style.height = element.style.width;
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.top = Math.random() * 100 + 'vh';
+        element.style.animationDuration = (Math.random() * 30 + 20) + 's'; // Movimiento más lento
+        element.style.animationDelay = (Math.random() * 15) + 's';
+        floatingContainer.appendChild(element);
+    }
+
+    // Ajustar el efecto parallax para ser más sutil
+    document.addEventListener('mousemove', (e) => {
+        const elements = document.querySelectorAll('.parallax-element');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        elements.forEach((element, index) => {
+            const depth = (index + 1) * 0.05; // Reducido el efecto parallax
+            const moveX = (mouseX - 0.5) * depth * 50;
+            const moveY = (mouseY - 0.5) * depth * 50;
+            element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    });
+
+    // Modificar las partículas para que sean más sutiles
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 2 + 1; // Partículas más pequeñas
+            this.speedX = Math.random() * 1 - 0.5; // Velocidad reducida
+            this.speedY = Math.random() * 1 - 0.5;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.size > 0.2) this.size -= 0.05; // Desvanecimiento más lento
+        }
+
+        draw(ctx) {
+            ctx.fillStyle = `rgba(59, 130, 246, ${this.size / 5})`; // Menor opacidad
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    // Reducir la cantidad de partículas generadas
+    document.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.5) { // Generar menos partículas
+            particles.push(new Particle(e.x, e.y));
+        }
+    });
+
+    // Efecto de cursor con resplandor
+    const cursorGlow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+            cursorGlow.style.display = 'block';
+            cursorGlow.style.left = e.clientX - 200 + 'px';
+            cursorGlow.style.top = e.clientY - 200 + 'px';
+        }
+    });
+
+    // Efecto parallax para elementos de fondo
+    const parallaxLayer = document.querySelector('.parallax-layer');
+    for (let i = 0; i < 10; i++) {
+        const element = document.createElement('div');
+        element.className = 'parallax-element';
+        element.style.width = Math.random() * 100 + 50 + 'px';
+        element.style.height = element.style.width;
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.top = Math.random() * 100 + 'vh';
+        parallaxLayer.appendChild(element);
+    }
+
+
+
+    // Animación suave al hacer scroll
+    window.addEventListener('scroll', () => {
+        const elements = document.querySelectorAll('.skill-card, .project-card, .timeline-item');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
+            const windowHeight = window.innerHeight;
+
+            if (elementTop < windowHeight * 0.8 && elementBottom > 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+   
+
+    // Inicializar canvas para partículas
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '1';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+       
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw(ctx);
+           
+            if (particles[i].size <= 0.2) {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        for (let i = 0; i < 2; i++) {
+            particles.push(new Particle(e.x, e.y));
+        }
+    });
+
+    animate();
+</script>
+    <script>
+        // Menú hamburguesa mejorado
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+       
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            // Animación suave del menú
+            if (navLinks.classList.contains('active')) {
+                navLinks.style.animation = 'slideDown 0.3s ease forwards';
+            } else {
+                navLinks.style.animation = 'slideUp 0.3s ease forwards';
+            }
+        });
+
+        // Efecto parallax suave
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.project-card');
+            const heroImage = document.querySelector('.hero-image');
+           
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+           
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+           
+            const moveX = (mouseX - windowWidth / 2) / 50;
+            const moveY = (mouseY - windowHeight / 2) / 50;
+
+            cards.forEach(card => {
+                card.style.transform = `translateX(${moveX}px) translateY(${moveY}px) rotateX(${moveY}deg) rotateY(${-moveX}deg)`;
+            });
+
+            if (heroImage) {
+                heroImage.style.transform = `translateX(${moveX * 0.5}px) translateY(${moveY * 0.5}px)`;
+            }
+        });
+
+        // Animación de entrada mejorada para las tarjetas
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) rotateX(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.project-card').forEach((card) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) rotateX(10deg)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(card);
+        });
+
+        // Efecto de desplazamiento suave mejorado
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
