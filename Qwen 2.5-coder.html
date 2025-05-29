@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .seccion {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        .seccion:nth-child(2) { animation-delay: 0.5s; }
+        .seccion:nth-child(3) { animation-delay: 1s; }
+        .seccion:nth-child(4) { animation-delay: 1.5s; }
+        .seccion:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #3498db;
+        }
+        form label {
+            display: block;
+            margin-top: 15px;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            transition: border-color 0.3s ease;
+        }
+        form input:focus, form textarea:focus {
+            border-color: #3498db;
+        }
+        form button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #2980b9;
+        }
+    
+
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio Personal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .seccion {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        .seccion:nth-child(2) { animation-delay: 0.5s; }
+        .seccion:nth-child(3) { animation-delay: 1s; }
+        .seccion:nth-child(4) { animation-delay: 1.5s; }
+        .seccion:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #3498db;
+        }
+        form label {
+            display: block;
+            margin-top: 15px;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            transition: border-color 0.3s ease;
+        }
+        form input:focus, form textarea:focus {
+            border-color: #3498db;
+        }
+        form button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<header class="seccion">
+    <h1>Mi Portafolio Personal</h1>
+</header>
+
+<section id="sobre-mi" class="seccion">
+    <h2>Sobre Mí</h2>
+    <p>Breve descripción sobre ti.</p>
+</section>
+
+<section id="proyectos" class="seccion">
+    <h2>Proyectos</h2>
+    <div id="lista-proyectos"></div>
+</section>
+
+<section id="contacto" class="seccion">
+    <h2>Contacto</h2>
+    <form id="formulario-contacto">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+<footer class="seccion">
+    &copy; 2023 Mi Portafolio Personal
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const proyectos = [
+            { nombre: 'Proyecto 1', descripcion: 'Descripción del Proyecto 1' },
+            { nombre: 'Proyecto 2', descripcion: 'Descripción del Proyecto 2' },
+            { nombre: 'Proyecto 3', descripcion: 'Descripción del Proyecto 3' }
+        ];
+        const listaProyectos = document.getElementById('lista-proyectos');
+        proyectos.forEach(proyecto => {
+            const div = document.createElement('div');
+            div.innerHTML = `<strong>${proyecto.nombre}</strong>: ${proyecto.descripcion}`;
+            listaProyectos.appendChild(div);
+        });
+        const formularioContacto = document.getElementById('formulario-contacto');
+        formularioContacto.addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Gracias por tu mensaje. Lo responderé lo antes posible.');
+            formularioContacto.reset();
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+
+							<script>
+                            	
+    document.addEventListener('DOMContentLoaded', function() {
+        const proyectos = [
+            { nombre: 'Proyecto 1', descripcion: 'Descripción del Proyecto 1' },
+            { nombre: 'Proyecto 2', descripcion: 'Descripción del Proyecto 2' },
+            { nombre: 'Proyecto 3', descripcion: 'Descripción del Proyecto 3' }
+        ];
+        const listaProyectos = document.getElementById('lista-proyectos');
+        proyectos.forEach(proyecto => {
+            const div = document.createElement('div');
+            div.innerHTML = `<strong>${proyecto.nombre}</strong>: ${proyecto.descripcion}`;
+            listaProyectos.appendChild(div);
+        });
+        const formularioContacto = document.getElementById('formulario-contacto');
+        formularioContacto.addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Gracias por tu mensaje. Lo responderé lo antes posible.');
+            formularioContacto.reset();
+        });
+    });
+
+
+							</script>
+                        </body>
+                        </html>
+
